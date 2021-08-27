@@ -21,17 +21,11 @@ class moviesDAO {
         year: year,
         movie_length: movieLength,
       })
-      .returning(['id', 'title', 'genre', 'year', 'movie_length']);
+      .returning('*');
     return addedMovie;
   }
   async updateMovie(reqBody, reqParams) {
     const { title, genre, year, movieLength } = reqBody;
-    const update = [];
-    update.push('id');
-    title && update.push('title');
-    genre && update.push('genre');
-    year && update.push('year');
-    movieLength && update.push('movie_length');
 
     const updatedMovie = await dbProduction('movies')
       .where('id', reqParams)
@@ -41,14 +35,14 @@ class moviesDAO {
         year: year,
         movie_lenth: movieLength,
       })
-      .returning(update);
+      .returning('*');
     return updatedMovie;
   }
   async deleteMovie(reqParams) {
     const deletedMovie = await dbProduction('movies')
       .where('id', reqParams)
       .del()
-      .returning(['id', 'title']);
+      .returning('*');
     return deletedMovie;
   }
 }

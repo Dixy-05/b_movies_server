@@ -11,7 +11,7 @@ exports.up = async function (knex) {
     table.string('first_name').notNullable();
     table.string('last_name').notNullable();
     table.string('user_email').notNullable().unique();
-    table.integer('user_phone').notNullable().unique();
+    table.integer('user_phone').notNullable().unique(); //this one was modified to a string, with a migration
     table.timestamps(true, true);
   });
 };

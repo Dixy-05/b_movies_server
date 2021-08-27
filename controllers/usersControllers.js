@@ -58,8 +58,8 @@ class UsersControllers {
       const schema = Joi.object({
         firstName: Joi.string(),
         lastName: Joi.string(),
-        userEmail: Joi.string(),
-        userPhone: Joi.number().integer(),
+        userEmail: Joi.string().unique(),
+        userPhone: Joi.string().unique(),
       });
       const { error } = schema.validate(req.body);
       if (error) {

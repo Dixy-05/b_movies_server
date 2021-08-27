@@ -9,7 +9,7 @@ exports.up = async function (knex) {
       .defaultTo(dbProduction.raw('uuid_generate_v4()'));
     table.string('type').notNullable().unique();
     table.string('detail').notNullable();
-    table.integer('#movies_monthly').notNullable().unique();
+    table.integer('movies_monthly').notNullable().unique();
     table.decimal('price').notNullable();
     table.timestamps(true, true);
   });
