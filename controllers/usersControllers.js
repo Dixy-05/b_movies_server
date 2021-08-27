@@ -12,14 +12,14 @@ class UsersControllers {
     }
   }
   async getUser(req, res) {
-    const schema = Joi.string().guid('uuidv4');
+    const schema = Joi.string().guid({ version: 'uuidv4' });
     const { error, value } = schema.validate(req.params.id);
     if (error) {
       return res.send(`The given id "${req.params.id} is not valid`);
     }
 
     try {
-      const user = await usersService.getUser(value);
+      const user = await usersService.getUser(req.params.id);
       res.status(200).send(user);
     } catch (err) {
       console.log(err);
@@ -28,10 +28,10 @@ class UsersControllers {
   }
   async addUser(req, res) {
     const schema = Joi.object({
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
-      user_email: Joi.string().email().required(),
-      user_phone: Joi.number().integer().required(),
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      userEmail: Joi.string().email().required(),
+      userPhone: Joi.number().integer().required(),
     });
 
     const { error, value } = schema.validate(req.body);
@@ -47,13 +47,31 @@ class UsersControllers {
     }
   }
   async updateUser(req, res) {
-    const schema = Joi.string().guid('uuidv4');
-    const { error, value } = schema.validate(req.params.id);
-    if (error) {
-      return res.send(`The given id "${req.params.id} is not valid`);
+    if (req.params.id) {
+      const schema = Joi.string().guid({ version: 'uuidv4' });
+      const { error } = schema.validate(req.params.id);
+      if (error) {
+        return res.send(error.details[0].message);
+      }
     }
-    const updatedUser = await usersService.updateUser();
+    if (req.body) {
+      const schema = Joi.object({
+        firstName: Joi.string(),
+        lastName: Joi.string(),
+        userEmail: Joi.string(),
+        userPhone: Joi.number().integer(),
+      });
+      const { error } = schema.validate(req.body);
+      if (error) {
+        console.log(error);
+        return res.send(error.details[0].message);
+      }
+    }
     try {
+      const updatedUser = await usersService.updateUser(
+        req.body,
+        req.params.id
+      );
       res.status(200).send(updatedUser);
     } catch (err) {
       console.log(err);
@@ -61,13 +79,15 @@ class UsersControllers {
     }
   }
   async deleteUser(req, res) {
-    const schema = Joi.string().guid('uuidv4');
-    const { error, value } = schema.validate(req.params.id);
-    if (error) {
-      return res.send(`The given id "${req.params.id} is not valid`);
+    if (req.params.id) {
+      const schema = Joi.string().guid({ version: 'uuidv4' });
+      const { error } = schema.validate(req.params.id);
+      if (error) {
+        return res.send(error.details[0].message);
+      }
     }
-    const deletedUser = await usersService.deleteUser();
     try {
+      const deletedUser = await usersService.deleteUser(req.params.id);
       res.status(200).send(deletedUser);
     } catch (err) {
       console.log(err);

@@ -7,8 +7,8 @@ class UsersService {
   }
   async getUser(reqParams) {
     const user = await usersDAO.getUser(reqParams);
-    if (!user) {
-      throw `The user with the given id ${reqParams} does not exist`;
+    if (user.length === 0) {
+      throw `The user with the given id "${reqParams}" does not exist`;
     }
     return user;
   }
@@ -16,12 +16,18 @@ class UsersService {
     const addedUser = await usersDAO.addUser(reqBody);
     return addedUser;
   }
-  async updateUser() {
-    const updatedUser = await usersDAO.updateUser();
+  async updateUser(reqBody, reqParams) {
+    const updatedUser = await usersDAO.updateUser(reqBody, reqParams);
+    if (updatedUser.length === 0) {
+      throw `The user with the given id ${reqParams} does not exist`;
+    }
     return updatedUser;
   }
-  async deleteUser() {
+  async deleteUser(reqParams) {
     const deletedUser = await usersDAO.deleteUser();
+    if (deletedUser.length === 0) {
+      throw `The user with the given id ${reqParams} does not exist`;
+    }
     return deletedUser;
   }
 }

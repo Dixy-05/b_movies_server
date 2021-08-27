@@ -6,7 +6,7 @@ exports.up = function (knex) {
     table.string('title').notNullable();
     table.string('genre').notNullable();
     table.integer('year').notNullable();
-    table.decimal('movie_length').notNullable();
+    table.string('movie_length').notNullable();
     table.timestamps(true, true);
   });
 };
