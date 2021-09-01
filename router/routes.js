@@ -5,14 +5,17 @@ const moviesControllers = require('../controllers/moviesControllers.js');
 const subscriptionsControllers = require('../controllers/subscriptionsControllers');
 const moviesRequestsControllers = require('../controllers/moviesRequestsControllers');
 const usersSubscriptionsControllers = require('../controllers/usersSubcriptionsControllers');
+const authControllers = require('../controllers/authControllers');
 
 //users routes
 router.get('/users', usersControllers.getUsers);
 router.get('/users/:id', usersControllers.getUser);
 router.put('/users/:id', usersControllers.updateUser);
 router.delete('/users/:id', usersControllers.deleteUser);
-router.post('/users/register', usersControllers.addUser);
-router.post('/users/login', usersControllers.loginUser);
+
+//auth routes
+router.post('/register', authControllers.registerUser);
+router.post('/login', authControllers.loginUser);
 
 //movies routes
 router.get('/movies', moviesControllers.getMovies);

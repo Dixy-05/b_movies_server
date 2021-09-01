@@ -26,14 +26,6 @@ class UsersService {
     }
     return deletedUser;
   }
-  async addUser(reqBody) {
-    const addedUser = await usersDAO.addUser(reqBody);
-    return addedUser;
-  }
-  async loginUser(reqBody) {
-    const token = await usersDAO.loginUser(reqBody);
-    return token;
-  }
 }
 
 module.exports = new UsersService();

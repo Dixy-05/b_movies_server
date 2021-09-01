@@ -15,12 +15,12 @@ class UsersDAO {
 
   async updateUser(reqBody, reqParams) {
     //can update 1 or more columns at a time//
-    const { userEmail, userPassword } = reqBody;
+    const { email, password } = reqBody;
     const updatedUser = await dbDevelopment('users')
       .where({ id: reqParams })
       .update({
-        user_email: userEmail,
-        user_password: userPassword,
+        email: email,
+        password: password,
       })
       .returning('*');
     return updatedUser;
@@ -31,27 +31,6 @@ class UsersDAO {
       .del()
       .returning('*');
     return deletedUser;
-  }
-  async addUser(reqBody) {
-    const { userEmail, userPassword } = reqBody;
-    const [addedUser] = await dbDevelopment('users')
-      .insert({
-        user_email: userEmail,
-        user_password: userPassword,
-      })
-      .returning('*');
-    // .returning(['id', 'first_name', 'last_name', 'user_email', 'user_phone']); // to return specific columns
-    return addedUser;
-  }
-  async loginUser(reqBody) {
-    const { userEmail, userPassword } = reqBody;
-    const [token] = await dbDevelopment('login')
-      .insert({
-        user_Email: userEmail,
-        user_password: userPassword,
-      })
-      .returning('user_email', 'token');
-    return token;
   }
 }
 

@@ -44,8 +44,8 @@ class UsersControllers {
     }
     if (req.body) {
       const schema = Joi.object({
-        userEmail: Joi.string().email().required(),
-        userPassword: Joi.string()
+        email: Joi.string().email().required(),
+        password: Joi.string()
           .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
           .required(),
       });
@@ -81,45 +81,6 @@ class UsersControllers {
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
-    }
-  }
-  async addUser(req, res) {
-    const schema = Joi.object({
-      userEmail: Joi.string().email().required(),
-      userPassword: Joi.string()
-        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
-        .required(),
-    });
-
-    const { error, value } = schema.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
-    try {
-      const addedUser = await usersService.addUser(value);
-      res.status(200).send(addedUser);
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  }
-  async loginUser(req, res) {
-    const schema = Joi.object({
-      userEmail: Joi.string().email().required(),
-      userPassword: Joi.string()
-        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
-        .required(),
-    });
-
-    const { error } = schema.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
-    try {
-      const token = await usersService.loginUser(req.body);
-      res.status(200).json({ token: token });
-    } catch (err) {
-      res.status(400).json({ Err_message: err });
     }
   }
 }
