@@ -34,27 +34,6 @@ class UsersControllers {
       res.status(400).send(err);
     }
   }
-  async addUser(req, res) {
-    const schema = Joi.object({
-      userName: Joi.string().required(),
-      userEmail: Joi.string().email().required(),
-      userPassword: Joi.string()
-        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
-        .required(),
-    });
-
-    const { error, value } = schema.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
-    try {
-      const addedUser = await usersService.addUser(value);
-      res.status(200).send(addedUser);
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  }
   async updateUser(req, res) {
     if (req.params.id) {
       const schema = Joi.string().guid({ version: 'uuidv4' });
@@ -65,7 +44,6 @@ class UsersControllers {
     }
     if (req.body) {
       const schema = Joi.object({
-        userName: Joi.string().required(),
         userEmail: Joi.string().email().required(),
         userPassword: Joi.string()
           .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
@@ -105,15 +83,45 @@ class UsersControllers {
       res.status(400).send(err);
     }
   }
+  async addUser(req, res) {
+    const schema = Joi.object({
+      userEmail: Joi.string().email().required(),
+      userPassword: Joi.string()
+        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+        .required(),
+    });
+
+    const { error, value } = schema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+    try {
+      const addedUser = await usersService.addUser(value);
+      res.status(200).send(addedUser);
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+  async loginUser(req, res) {
+    const schema = Joi.object({
+      userEmail: Joi.string().email().required(),
+      userPassword: Joi.string()
+        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+        .required(),
+    });
+
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+    try {
+      const token = await usersService.loginUser(req.body);
+      res.status(200).json({ token: token });
+    } catch (err) {
+      res.status(400).json({ Err_message: err });
+    }
+  }
 }
 
 module.exports = new UsersControllers();
-
-//regular expresion for password
-
-// /^
-//   (?=.*\d)          // should contain at least one digit
-//   (?=.*[a-z])       // should contain at least one lower case
-//   (?=.*[A-Z])       // should contain at least one upper case
-//   [a-zA-Z0-9]{8,}   // should contain at least 8 from the mentioned characters
-// $/

@@ -12,10 +12,6 @@ class UsersService {
     }
     return user;
   }
-  async addUser(reqBody) {
-    const addedUser = await usersDAO.addUser(reqBody);
-    return addedUser;
-  }
   async updateUser(reqBody, reqParams) {
     const updatedUser = await usersDAO.updateUser(reqBody, reqParams);
     if (updatedUser.length === 0) {
@@ -29,6 +25,14 @@ class UsersService {
       throw `The user with the given id ${reqParams} does not exist`;
     }
     return deletedUser;
+  }
+  async addUser(reqBody) {
+    const addedUser = await usersDAO.addUser(reqBody);
+    return addedUser;
+  }
+  async loginUser(reqBody) {
+    const token = await usersDAO.loginUser(reqBody);
+    return token;
   }
 }
 
