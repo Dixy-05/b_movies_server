@@ -2,6 +2,14 @@ const usersService = require('../service/usersService');
 const Joi = require('joi');
 
 class UsersControllers {
+  dateTesting(req, res) {
+    try {
+      return res.status(200).send({ body: req.body });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async getUsers(req, res) {
     const users = await usersService.getUsers();
     try {
@@ -28,10 +36,11 @@ class UsersControllers {
   }
   async addUser(req, res) {
     const schema = Joi.object({
-      firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
+      userName: Joi.string().required(),
       userEmail: Joi.string().email().required(),
-      userPhone: Joi.number().integer().required(),
+      userPassword: Joi.string()
+        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+        .required(),
     });
 
     const { error, value } = schema.validate(req.body);
@@ -56,11 +65,13 @@ class UsersControllers {
     }
     if (req.body) {
       const schema = Joi.object({
-        firstName: Joi.string(),
-        lastName: Joi.string(),
-        userEmail: Joi.string().unique(),
-        userPhone: Joi.string().unique(),
+        userName: Joi.string().required(),
+        userEmail: Joi.string().email().required(),
+        userPassword: Joi.string()
+          .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+          .required(),
       });
+
       const { error } = schema.validate(req.body);
       if (error) {
         console.log(error);
@@ -97,3 +108,12 @@ class UsersControllers {
 }
 
 module.exports = new UsersControllers();
+
+//regular expresion for password
+
+// /^
+//   (?=.*\d)          // should contain at least one digit
+//   (?=.*[a-z])       // should contain at least one lower case
+//   (?=.*[A-Z])       // should contain at least one upper case
+//   [a-zA-Z0-9]{8,}   // should contain at least 8 from the mentioned characters
+// $/

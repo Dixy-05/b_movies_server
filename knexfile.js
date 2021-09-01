@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'postgres',
     connection: {
-      database: 'knexjs_sql',
+      database: 'b_movies_dev',
       user: 'postgres',
       password: 'post12345G',
       port: 5433,
@@ -16,9 +16,10 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
+      directory: './DB/development/migrations',
     },
     seeds: {
-      directory: './db/seeds',
+      directory: './DB/development/seeds',
     },
   },
 
@@ -54,10 +55,10 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './DB/migrations/production',
+      directory: './DB/production/migrations',
     },
     seeds: {
-      directory: './DB/seeds',
+      directory: './DB/production/seeds',
     },
   },
 };

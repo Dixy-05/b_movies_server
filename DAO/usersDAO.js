@@ -1,25 +1,25 @@
-const { dbProduction } = require('../DB/db');
+const { dbProduction, dbDevelopment } = require('../DB/db');
 
 class UsersDAO {
   async getUsers() {
-    const users = await dbProduction.select('*').from('users');
+    const users = await dbDevelopment.select('*').from('users');
     return users;
   }
   async getUser(reqParams) {
-    const user = await dbProduction
+    const user = await dbDevelopment
       .select('*')
       .from('users')
       .where('id', reqParams);
     return user;
   }
+
   async addUser(reqBody) {
-    const { firstName, lastName, userEmail, userPhone } = reqBody;
-    const [addedUser] = await dbProduction('users')
+    const { userName, userEmail, userPassword } = reqBody;
+    const [addedUser] = await dbDevelopment('users')
       .insert({
-        first_name: firstName,
-        last_name: lastName,
+        user_name: userName,
         user_email: userEmail,
-        user_phone: userPhone,
+        user_password: userPassword,
       })
       .returning('*');
     // .returning(['id', 'first_name', 'last_name', 'user_email', 'user_phone']); // to return specific columns
@@ -27,20 +27,19 @@ class UsersDAO {
   }
   async updateUser(reqBody, reqParams) {
     //can update 1 or more columns at a time//
-    const { firstName, lastName, userEmail, userPhone } = reqBody;
-    const updatedUser = await dbProduction('users')
+    const { userName, userEmail, userPassword } = reqBody;
+    const updatedUser = await dbDevelopment('users')
       .where({ id: reqParams })
       .update({
-        first_name: firstName,
-        last_name: lastName,
+        user_name: userName,
         user_email: userEmail,
-        user_phone: userPhone,
+        user_password: userPassword,
       })
       .returning('*');
     return updatedUser;
   }
   async deleteUser(reqParams) {
-    deletedUser = await dbProduction('users')
+    deletedUser = await dbDevelopment('users')
       .where('id', reqParams)
       .del()
       .returning('*');
