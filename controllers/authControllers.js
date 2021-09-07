@@ -15,8 +15,21 @@ class authControllers {
       return res.status(400).json({ err_message: error.details[0].message });
     }
     try {
-      const user = await authService.registerUser(req.body);
-      res.status(200).json({ added_User: user });
+      const { token, user } = await authService.registerUser(req.body);
+
+      // res.cookie('jwt', token);
+      // res.status(200).send({ message: "you've got the cookies" });
+      // res.header('Access-Control-Allow-Credentials', true);
+      res.cookie(
+        'jwt',
+        token
+        //  {
+        // httpOnly: true,
+        // maxAge: 60 * 60 * 1000,
+        // withCredentials: true,
+        // }
+      );
+      res.status(200).json({ user_id: user.id });
     } catch (err) {
       console.log(err);
       res.status(400).json({ err: err });
@@ -37,7 +50,11 @@ class authControllers {
     }
     try {
       const token = await authService.loginUser(req.body);
-      res.status(200).json({ token: token });
+      console.log('token:', token);
+      res.cookie('jwt', token, { httpOnly: false, maxAge: 60 * 60 * 1000 });
+      res
+        .status(200)
+        .json({ credentials: { token: token, email: req.body.email } });
     } catch (err) {
       res.status(400).json({ Err_message: err });
     }

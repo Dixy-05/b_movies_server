@@ -11,7 +11,7 @@ const authControllers = require('../controllers/authControllers');
 router.get('/users', usersControllers.getUsers);
 router.get('/users/:id', usersControllers.getUser);
 router.put('/users/:id', usersControllers.updateUser);
-router.delete('/users/:id', usersControllers.deleteUser);
+router.delete('/users/:email', usersControllers.deleteUser);
 
 //auth routes
 router.post('/register', authControllers.registerUser);

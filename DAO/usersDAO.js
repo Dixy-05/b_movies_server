@@ -26,8 +26,8 @@ class UsersDAO {
     return updatedUser;
   }
   async deleteUser(reqParams) {
-    deletedUser = await dbDevelopment('users')
-      .where('id', reqParams)
+    const [deletedUser] = await dbDevelopment('users')
+      .where('email', reqParams.email)
       .del()
       .returning('*');
     return deletedUser;

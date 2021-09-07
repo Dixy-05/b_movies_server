@@ -1,5 +1,6 @@
 const authDAO = require('../DAO/authDAO');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 class authService {
   async encryptPassword(password) {
@@ -15,14 +16,38 @@ class authService {
       });
     });
   }
-
+  async generateAccesToken(email) {
+    return new Promise((resolve, reject) => {
+      jwt.sign(
+        { email: email },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: '1h',
+        },
+        (err, token) => {
+          if (err) {
+            return reject(err);
+          } else {
+            resolve(token);
+          }
+        }
+      );
+    });
+  }
   async registerUser(reqBody) {
     const encryptedPassword = await this.encryptPassword(reqBody.password);
-    const addedUser = await authDAO.registerUser({
-      email: reqBody.email,
-      password: encryptedPassword,
-    });
-    return addedUser;
+    if (encryptedPassword) {
+      const registeredUser = await authDAO.registerUser({
+        email: reqBody.email,
+        password: encryptedPassword,
+      });
+      if (registeredUser === 0) {
+        throw 'Registry Unsuccessful';
+      }
+      const user = await authDAO.getUser(reqBody);
+      const accessToken = await this.generateAccesToken(reqBody.email);
+      return { accessToken, user };
+    }
   }
 
   async comparePassword(password, hash) {
@@ -39,13 +64,28 @@ class authService {
   }
 
   async loginUser(reqBody) {
-    const user = await authDAO.loginUser(reqBody);
-    console.log('user:', user);
-    const isValid = await this.comparePassword(reqBody.password, user.password);
-    if (isValid) {
-      return true;
+    const user = await authDAO.getUser(reqBody);
+    if (!user) {
+      console.log('user does not exist');
+      throw 'Incorrect email';
+    } else {
+      const isValid = await this.comparePassword(
+        reqBody.password,
+        user.password
+      );
+      if (isValid) {
+        const accessToken = await this.generateAccesToken(reqBody.email);
+        return accessToken;
+      } else {
+        console.log('bad password');
+        throw 'Incorrect password';
+      }
     }
-    return false;
   }
 }
 module.exports = new authService();
+
+// app.get('/read-cookies', (req, res) => {
+//   const cookies = req.cookies;
+//   console.log(cookies);
+// });

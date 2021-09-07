@@ -15,14 +15,14 @@ class UsersService {
   async updateUser(reqBody, reqParams) {
     const updatedUser = await usersDAO.updateUser(reqBody, reqParams);
     if (updatedUser.length === 0) {
-      throw `The user with the given id ${reqParams} does not exist`;
+      throw `The user with the given id ${reqParams.id} does not exist`;
     }
     return updatedUser;
   }
   async deleteUser(reqParams) {
-    const deletedUser = await usersDAO.deleteUser();
-    if (deletedUser.length === 0) {
-      throw `The user with the given id ${reqParams} does not exist`;
+    const deletedUser = await usersDAO.deleteUser(reqParams);
+    if (!deletedUser) {
+      throw `The user with the given email ${reqParams.email} does not exist`;
     }
     return deletedUser;
   }

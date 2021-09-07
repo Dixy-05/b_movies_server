@@ -11,7 +11,7 @@ class auhtDAO {
       .returning('*');
     return addedUser;
   }
-  async loginUser(reqBody) {
+  async getUser(reqBody) {
     const [user] = await dbDevelopment
       .select('*')
       .from('users')

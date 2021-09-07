@@ -68,19 +68,19 @@ class UsersControllers {
     }
   }
   async deleteUser(req, res) {
-    if (req.params.id) {
-      const schema = Joi.string().guid({ version: 'uuidv4' });
-      const { error } = schema.validate(req.params.id);
+    if (req.params.email) {
+      const schema = Joi.string().email();
+      const { error } = schema.validate(req.params.email);
       if (error) {
-        return res.send(error.details[0].message);
+        return res.send({ error: error.details[0].message });
       }
     }
     try {
-      const deletedUser = await usersService.deleteUser(req.params.id);
-      res.status(200).send(deletedUser);
+      const deletedUser = await usersService.deleteUser(req.params);
+      res.status(200).json({ deletedUser: deletedUser });
     } catch (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(400).send({ err: err });
     }
   }
 }
