@@ -9,7 +9,7 @@ const authControllers = require('../controllers/authControllers');
 
 //users routes
 router.get('/users', usersControllers.getUsers);
-router.get('/users/:id', usersControllers.getUser);
+router.get('/users/:email', usersControllers.getUser);
 router.put('/users/:id', usersControllers.updateUser);
 router.delete('/users/:email', usersControllers.deleteUser);
 

@@ -22,7 +22,7 @@ class UsersService {
   async deleteUser(reqParams) {
     const deletedUser = await usersDAO.deleteUser(reqParams);
     if (!deletedUser) {
-      throw `The user with the given email ${reqParams.email} does not exist`;
+      throw `The user with the given email ${reqParams} does not exist`;
     }
     return deletedUser;
   }

@@ -2,14 +2,6 @@ const usersService = require('../service/usersService');
 const Joi = require('joi');
 
 class UsersControllers {
-  dateTesting(req, res) {
-    try {
-      return res.status(200).send({ body: req.body });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   async getUsers(req, res) {
     const users = await usersService.getUsers();
     try {
@@ -20,18 +12,20 @@ class UsersControllers {
     }
   }
   async getUser(req, res) {
-    const schema = Joi.string().guid({ version: 'uuidv4' });
-    const { error, value } = schema.validate(req.params.id);
+    const schema = Joi.string().email();
+    const { error, value } = schema.validate(req.params.email);
     if (error) {
-      return res.send(`The given id "${req.params.id} is not valid`);
+      return res.json({
+        error: error.details[0].message,
+      });
     }
 
     try {
-      const user = await usersService.getUser(req.params.id);
-      res.status(200).send(user);
+      const user = await usersService.getUser(req.params.email);
+      res.status(200).json({ user: user });
     } catch (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(400).send({ err: err });
     }
   }
   async updateUser(req, res) {
@@ -68,19 +62,18 @@ class UsersControllers {
     }
   }
   async deleteUser(req, res) {
-    if (req.params.email) {
-      const schema = Joi.string().email();
-      const { error } = schema.validate(req.params.email);
-      if (error) {
-        return res.send({ error: error.details[0].message });
-      }
-    }
+    const schema = Joi.string().email();
+    const emailValidation = schema.validate(req.params.email);
     try {
-      const deletedUser = await usersService.deleteUser(req.params);
+      if (emailValidation.error) {
+        throw emailValidation.error.details[0].message;
+      }
+      console.log('validation:', emailValidation.value);
+      const deletedUser = await usersService.deleteUser(emailValidation.value);
       res.status(200).json({ deletedUser: deletedUser });
-    } catch (err) {
-      console.log(err);
-      res.status(400).send({ err: err });
+    } catch (error) {
+      console.log('the error:', error);
+      return res.status(500).send({ error: error });
     }
   }
 }

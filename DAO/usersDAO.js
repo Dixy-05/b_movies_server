@@ -6,10 +6,10 @@ class UsersDAO {
     return users;
   }
   async getUser(reqParams) {
-    const user = await dbDevelopment
+    const [user] = await dbDevelopment
       .select('*')
       .from('users')
-      .where('id', reqParams);
+      .where('email', reqParams);
     return user;
   }
 
@@ -27,7 +27,7 @@ class UsersDAO {
   }
   async deleteUser(reqParams) {
     const [deletedUser] = await dbDevelopment('users')
-      .where('email', reqParams.email)
+      .where('email', reqParams)
       .del()
       .returning('*');
     return deletedUser;
