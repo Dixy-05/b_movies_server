@@ -44,9 +44,8 @@ class authService {
       if (registeredUser === 0) {
         throw 'Registry Unsuccessful';
       }
-      const user = await authDAO.getUser(reqBody);
       const accessToken = await this.generateAccesToken(reqBody.email);
-      return { accessToken, user };
+      return accessToken;
     }
   }
 

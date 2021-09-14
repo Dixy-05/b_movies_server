@@ -6,23 +6,24 @@ const subscriptionsControllers = require('../controllers/subscriptionsController
 const moviesRequestsControllers = require('../controllers/moviesRequestsControllers');
 const usersSubscriptionsControllers = require('../controllers/usersSubcriptionsControllers');
 const authControllers = require('../controllers/authControllers');
-
-//users routes
-router.get('/users', usersControllers.getUsers);
-router.get('/users/:email', usersControllers.getUser);
-router.put('/users/:id', usersControllers.updateUser);
-router.delete('/users/:email', usersControllers.deleteUser);
+const { authenticateJWT } = require('../controllers/authenticateJwt');
 
 //auth routes
 router.post('/register', authControllers.registerUser);
 router.post('/login', authControllers.loginUser);
 
+//users routes
+router.get('/users', authenticateJWT, usersControllers.getUsers);
+router.get('/users/:email', authenticateJWT, usersControllers.getUser);
+router.put('/users/:id', authenticateJWT, usersControllers.updateUser);
+router.delete('/users/:email', authenticateJWT, usersControllers.deleteUser);
+
 //movies routes
-router.get('/movies', moviesControllers.getMovies);
-router.get('/movies/:id', moviesControllers.getMovie);
-router.post('/movies', moviesControllers.addMovie);
-router.put('/movies/:id', moviesControllers.updateMovie);
-router.delete('/movies/:id', moviesControllers.deleteMovie);
+router.get('/movies', authenticateJWT, moviesControllers.getMovies);
+router.get('/movies/:id', authenticateJWT, moviesControllers.getMovie);
+router.post('/movies', authenticateJWT, moviesControllers.addMovie);
+router.put('/movies/:id', authenticateJWT, moviesControllers.updateMovie);
+router.delete('/movies/:id', authenticateJWT, moviesControllers.deleteMovie);
 
 //subscriptions routes
 router.get('/subscriptions', subscriptionsControllers.getSubscriptions);

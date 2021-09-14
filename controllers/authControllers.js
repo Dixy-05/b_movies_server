@@ -18,10 +18,10 @@ class authControllers {
         .json({ error: bodyValidation.error.details[0].message });
       // throw error.details[0].message;
     }
-
+    // user_id: user.id
     try {
-      const { token, user } = await authService.registerUser(req.body);
-      res.status(200).json({ toke: token, user_id: user.id });
+      const token = await authService.registerUser(req.body);
+      res.status(200).json({ token: token });
     } catch (err) {
       console.log(err);
       res.status(400).json({ error: err });
@@ -38,7 +38,7 @@ class authControllers {
 
     const { error } = schema.validate(req.body);
     if (error) {
-      return res.status(400).json({ err_message: error.details[0].message });
+      return res.status(400).json({ error: error.details[0].message });
     }
     try {
       const token = await authService.loginUser(req.body);
@@ -46,7 +46,7 @@ class authControllers {
       // res.cookie('jwt', token, { httpOnly: false, maxAge: 60 * 60 * 1000 });
       res.status(200).json({ token: token });
     } catch (err) {
-      res.status(400).json({ Err_message: err });
+      res.status(400).json({ error: err });
     }
   }
 }
