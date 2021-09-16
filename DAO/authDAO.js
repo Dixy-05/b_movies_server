@@ -3,7 +3,7 @@ const { dbDevelopment } = require('../DB/db');
 class auhtDAO {
   async registerUser(reqBody) {
     const { email, password } = reqBody;
-    const [addedUser] = await dbDevelopment('users')
+    const [addedUser] = await dbDevelopment('admin_users')
       .insert({
         email: email,
         password: password,
@@ -14,7 +14,7 @@ class auhtDAO {
   async getUser(reqBody) {
     const [user] = await dbDevelopment
       .select('*')
-      .from('users')
+      .from('admin_users')
       .where('email', reqBody.email);
     return user;
   }

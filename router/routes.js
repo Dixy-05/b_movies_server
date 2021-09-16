@@ -13,6 +13,7 @@ router.post('/register', authControllers.registerUser);
 router.post('/login', authControllers.loginUser);
 
 //users routes
+// router.post('/users', authenticateJWT, usersControllers.createUser);
 router.get('/users', authenticateJWT, usersControllers.getUsers);
 router.get('/users/:email', authenticateJWT, usersControllers.getUser);
 router.put('/users/:id', authenticateJWT, usersControllers.updateUser);

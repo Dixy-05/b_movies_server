@@ -16,12 +16,10 @@ class authControllers {
       return res
         .status(400)
         .json({ error: bodyValidation.error.details[0].message });
-      // throw error.details[0].message;
     }
-    // user_id: user.id
     try {
-      const token = await authService.registerUser(req.body);
-      res.status(200).json({ token: token });
+      const { accessToken, user } = await authService.registerUser(req.body);
+      res.status(200).json({ token: accessToken, account: user.email });
     } catch (err) {
       console.log(err);
       res.status(400).json({ error: err });
@@ -41,10 +39,8 @@ class authControllers {
       return res.status(400).json({ error: error.details[0].message });
     }
     try {
-      const token = await authService.loginUser(req.body);
-      console.log('token:', token);
-      // res.cookie('jwt', token, { httpOnly: false, maxAge: 60 * 60 * 1000 });
-      res.status(200).json({ token: token });
+      const { accessToken, user } = await authService.loginUser(req.body);
+      res.status(200).json({ token: accessToken, account: user.email });
     } catch (err) {
       res.status(400).json({ error: err });
     }

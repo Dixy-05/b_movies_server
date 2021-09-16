@@ -37,15 +37,15 @@ class authService {
   async registerUser(reqBody) {
     const encryptedPassword = await this.encryptPassword(reqBody.password);
     if (encryptedPassword) {
-      const registeredUser = await authDAO.registerUser({
+      const user = await authDAO.registerUser({
         email: reqBody.email,
         password: encryptedPassword,
       });
-      if (registeredUser === 0) {
+      if (user === 0) {
         throw 'Registry Unsuccessful';
       }
       const accessToken = await this.generateAccesToken(reqBody.email);
-      return accessToken;
+      return { accessToken, user };
     }
   }
 
@@ -74,17 +74,12 @@ class authService {
       );
       if (isValid) {
         const accessToken = await this.generateAccesToken(reqBody.email);
-        return accessToken;
+        return { accessToken, user };
       } else {
-        console.log('bad password');
+        console.log('Incorrect password');
         throw 'Incorrect password';
       }
     }
   }
 }
 module.exports = new authService();
-
-// app.get('/read-cookies', (req, res) => {
-//   const cookies = req.cookies;
-//   console.log(cookies);
-// });
