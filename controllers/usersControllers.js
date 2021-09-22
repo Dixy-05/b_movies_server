@@ -16,7 +16,7 @@ class UsersControllers {
     const paramValid = schema.validate(req.params.email);
     if (paramValid.error) {
       return res.json({
-        error: error.details[0].message,
+        error: paramValid.error.details[0].message,
       });
     }
     try {
@@ -27,12 +27,7 @@ class UsersControllers {
       res.status(400).json({ err: err });
     }
   }
-  async updateUser(req, res) {
-    const paramSchema = Joi.string().guid({ version: 'uuidv4' });
-    const paramValid = paramSchema.validate(req.params.id);
-    if (paramValid.error) {
-      return res.json({ error: paramValid.error.details[0].message });
-    }
+  async createUser(req, res) {
     const bodySchema = Joi.object({
       email: Joi.string().email().required(),
       password: Joi.string()
@@ -45,11 +40,8 @@ class UsersControllers {
       return res.json({ error: bodyValid.error.details[0].message });
     }
     try {
-      const updatedUser = await usersService.updateUser(
-        bodyValid.value,
-        paramValid.values
-      );
-      res.status(200).json({ user: updatedUser });
+      const newUser = await usersService.createUser(bodyValid.value);
+      res.status(200).json({ user: newUser });
     } catch (err) {
       console.log(err);
       res.status(400).json({ error: err });
@@ -58,7 +50,7 @@ class UsersControllers {
   async deleteUser(req, res) {
     const schema = Joi.string().email();
     const paramValid = schema.validate(req.params.email);
-    if (emailValidation.error) {
+    if (paramValid.error) {
       res.status(400).json({ error: paramValid.error.details[0].message });
     }
     try {

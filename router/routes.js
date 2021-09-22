@@ -16,12 +16,12 @@ router.post('/login', authControllers.loginUser);
 // router.post('/users', authenticateJWT, usersControllers.createUser);
 router.get('/users', authenticateJWT, usersControllers.getUsers);
 router.get('/users/:email', authenticateJWT, usersControllers.getUser);
-router.put('/users/:id', authenticateJWT, usersControllers.updateUser);
+router.post('/users', authenticateJWT, usersControllers.createUser);
 router.delete('/users/:email', authenticateJWT, usersControllers.deleteUser);
 
 //movies routes
 router.get('/movies', authenticateJWT, moviesControllers.getMovies);
-router.get('/movies/:id', authenticateJWT, moviesControllers.getMovie);
+router.get('/movies/:title', authenticateJWT, moviesControllers.getMovie);
 router.post('/movies', authenticateJWT, moviesControllers.addMovie);
 router.put('/movies/:id', authenticateJWT, moviesControllers.updateMovie);
 router.delete('/movies/:id', authenticateJWT, moviesControllers.deleteMovie);

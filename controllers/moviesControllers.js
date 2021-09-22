@@ -11,16 +11,15 @@ class moviesControllers {
     }
   }
   async getMovie(req, res) {
-    const schema = Joi.number.integer();
-    const paramValid = schema.validate(req.params.id);
+    const schema = Joi.string();
+    const paramValid = schema.validate(req.params.title);
     if (paramValid.error) {
       console.log(paramValid.error);
       res.status(400).json({ error: paramValid.error.details[0].message });
     }
-
     try {
-      const movies = await moviesService.getMovie();
-      res.status(200).json({ movies: movies });
+      const [movie] = await moviesService.getMovie(paramValid.value);
+      res.status(200).json({ movie: movie });
     } catch (err) {
       console.log(err);
       res.status(400).json({ error: err });
@@ -51,7 +50,7 @@ class moviesControllers {
     }
   }
   async updateMovie(req, res) {
-    const paramSchema = Joi.number().integer();
+    const paramSchema = Joi.string().guid({ version: 'uuidv4' });
     const paramValid = paramSchema.validate(req.params.id);
     if (paramValid.error) {
       console.log(paramValid.error);

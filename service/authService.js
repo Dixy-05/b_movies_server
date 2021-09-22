@@ -66,7 +66,7 @@ class authService {
     const user = await authDAO.getUser(reqBody);
     if (!user) {
       console.log('user does not exist');
-      throw 'Incorrect email';
+      throw 'The given email does Not exist';
     } else {
       const isValid = await this.comparePassword(
         reqBody.password,

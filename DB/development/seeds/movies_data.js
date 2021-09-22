@@ -6,7 +6,6 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex('movies').insert([
         {
-          id: 2,
           title: 'Jurassic Park',
           genre: 'science ficcion',
           year: 1993,
@@ -15,7 +14,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T02:43:41.599Z',
         },
         {
-          id: 1,
           title: 'Tomb Raider',
           genre: 'action',
           year: 2013,
@@ -24,7 +22,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T00:13:18.420Z',
         },
         {
-          id: 17,
           title: 'Escape from New York',
           genre: 'action',
           year: 1981,
@@ -33,7 +30,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:20:18.512Z',
         },
         {
-          id: 18,
           title: 'The Rock',
           genre: 'action',
           year: 1996,
@@ -42,7 +38,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:21:31.317Z',
         },
         {
-          id: 19,
           title: 'Speed',
           genre: 'action',
           year: 1994,
@@ -51,7 +46,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:22:52.827Z',
         },
         {
-          id: 20,
           title: 'Wonder Woman',
           genre: 'action',
           year: 2017,
@@ -60,7 +54,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:24:08.459Z',
         },
         {
-          id: 21,
           title: 'Predator',
           genre: 'action',
           year: 1987,
@@ -69,7 +62,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:24:54.593Z',
         },
         {
-          id: 22,
           title: 'Avengers:Endgame',
           genre: 'action',
           year: 2019,
@@ -78,7 +70,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:26:18.235Z',
         },
         {
-          id: 23,
           title: 'Total recall',
           genre: 'action',
           year: 1990,
@@ -87,7 +78,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:27:05.547Z',
         },
         {
-          id: 24,
           title: 'Logan',
           genre: 'action',
           year: 2017,
@@ -96,7 +86,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:27:52.908Z',
         },
         {
-          id: 25,
           title: 'Snowpiercer',
           genre: 'science fiction',
           year: 2013,
@@ -105,7 +94,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:39:54.969Z',
         },
         {
-          id: 26,
           title: 'Disctrict 9',
           genre: 'science fiction',
           year: 2009,
@@ -114,7 +102,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:41:21.897Z',
         },
         {
-          id: 27,
           title: 'Invasion Of The Body Snatchers',
           genre: 'science fiction',
           year: 1978,
@@ -123,7 +110,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:43:04.831Z',
         },
         {
-          id: 28,
           title: '12 Monkeys',
           genre: 'science fiction',
           year: 1995,
@@ -132,7 +118,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:43:50.667Z',
         },
         {
-          id: 29,
           title: 'Artificial Intelligence',
           genre: 'science fiction',
           year: 2001,
@@ -141,7 +126,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:44:58.494Z',
         },
         {
-          id: 30,
           title: 'Avatar',
           genre: 'science fiction',
           year: 2009,
@@ -150,7 +134,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:45:29.717Z',
         },
         {
-          id: 31,
           title: 'Manority Report',
           genre: 'science fiction',
           year: 2002,
@@ -159,7 +142,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:47:29.456Z',
         },
         {
-          id: 32,
           title: 'Wall-E',
           genre: 'science fiction',
           year: 2008,
@@ -168,7 +150,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:48:16.846Z',
         },
         {
-          id: 33,
           title: 'Guardians Of The Galaxy',
           genre: 'science fiction',
           year: 2014,
@@ -177,7 +158,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:49:30.349Z',
         },
         {
-          id: 34,
           title: 'Kung Fu Hustle',
           genre: 'comedy',
           year: 2004,
@@ -186,7 +166,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:51:42.631Z',
         },
         {
-          id: 35,
           title: 'Meet The Parents',
           genre: 'comedy',
           year: 2000,
@@ -195,7 +174,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:52:37.151Z',
         },
         {
-          id: 36,
           title: 'Palm Springs',
           genre: 'comedy',
           year: 2020,
@@ -204,7 +182,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:53:39.327Z',
         },
         {
-          id: 37,
           title: 'The Mask',
           genre: 'comedy',
           year: 1994,
@@ -213,7 +190,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:54:19.761Z',
         },
         {
-          id: 38,
           title: 'School Of Rock',
           genre: 'comedy',
           year: 2003,
@@ -222,7 +198,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:55:14.344Z',
         },
         {
-          id: 39,
           title: 'Ace Ventura, Pet Detective',
           genre: 'comedy',
           year: 1994,
@@ -231,7 +206,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:57:17.299Z',
         },
         {
-          id: 40,
           title: 'Mrs Doubtfire',
           genre: 'comedy',
           year: 1993,
@@ -240,7 +214,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:58:32.892Z',
         },
         {
-          id: 41,
           title: 'Coming To America',
           genre: 'comedy',
           year: 1988,
@@ -249,7 +222,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-27T23:59:44.527Z',
         },
         {
-          id: 42,
           title: 'Shaun Of The Dead',
           genre: 'comedy',
           year: 2004,
@@ -258,7 +230,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-28T00:00:44.807Z',
         },
         {
-          id: 43,
           title: 'Zoolander',
           genre: 'comedy',
           year: 2001,
@@ -267,7 +238,6 @@ exports.seed = function (knex) {
           updated_at: '2021-08-28T00:01:19.702Z',
         },
         {
-          id: 44,
           title: 'The Naked Gun',
           genre: 'comedy',
           year: 1988,

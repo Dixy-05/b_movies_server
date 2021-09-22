@@ -13,17 +13,15 @@ class UsersDAO {
     return user;
   }
 
-  async updateUser(reqBody, reqParams) {
-    //can update 1 or more columns at a time//
+  async createUser(reqBody) {
     const { email, password } = reqBody;
-    const updatedUser = await dbDevelopment('users')
-      .where({ id: reqParams })
-      .update({
+    const [newUser] = await dbDevelopment('users')
+      .insert({
         email: email,
         password: password,
       })
       .returning('*');
-    return updatedUser;
+    return newUser;
   }
   async deleteUser(reqParams) {
     const [deletedUser] = await dbDevelopment('users')
