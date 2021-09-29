@@ -8,7 +8,7 @@ class subscriptionsService {
   async getSubscription(reqParams) {
     const subscription = await subscriptionsDAO.getSubscription(reqParams);
     if (subscription.length === 0) {
-      throw `The subscription with the given id "${reqParams} does not exist.`;
+      throw `The subscription with the given type "${reqParams}" does not exist.`;
     }
     return subscription;
   }

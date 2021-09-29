@@ -27,10 +27,26 @@ router.put('/movies/:id', authenticateJWT, moviesControllers.updateMovie);
 router.delete('/movies/:id', authenticateJWT, moviesControllers.deleteMovie);
 
 //subscriptions routes
-router.get('/subscriptions', subscriptionsControllers.getSubscriptions);
-router.get('/subscriptions/:id', subscriptionsControllers.getSubscription);
-router.post('/subscriptions', subscriptionsControllers.addSubscription);
-router.put('/subscriptions/:id', subscriptionsControllers.updateSubscription);
+router.get(
+  '/subscriptions',
+  authenticateJWT,
+  subscriptionsControllers.getSubscriptions
+);
+router.get(
+  '/subscriptions/:type',
+  authenticateJWT,
+  subscriptionsControllers.getSubscription
+);
+router.post(
+  '/subscriptions',
+  authenticateJWT,
+  subscriptionsControllers.addSubscription
+);
+router.put(
+  '/subscriptions/:id',
+  authenticateJWT,
+  subscriptionsControllers.updateSubscription
+);
 router.delete(
   '/subscriptions/:id',
   subscriptionsControllers.deleteSubscription
@@ -49,22 +65,27 @@ router.delete(
 //users subscriptions routes
 router.get(
   '/usersSubscriptions/',
+  authenticateJWT,
   usersSubscriptionsControllers.getUsersSubscriptions
 );
 router.get(
   '/usersSubscriptions/:id',
+  authenticateJWT,
   usersSubscriptionsControllers.getUserSubscription
 );
 router.post(
   '/usersSubscriptions/',
+  authenticateJWT,
   usersSubscriptionsControllers.addUserSubscription
 );
-router.post(
-  '/usersSubscriptions/',
+router.put(
+  '/usersSubscriptions/:id',
+  authenticateJWT,
   usersSubscriptionsControllers.updateUserSubscription
 );
-router.post(
-  '/usersSubscriptions/',
+router.delete(
+  '/usersSubscriptions/:id',
+  authenticateJWT,
   usersSubscriptionsControllers.deleteUserSubscription
 );
 module.exports = router;

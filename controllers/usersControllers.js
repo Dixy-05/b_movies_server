@@ -20,11 +20,11 @@ class UsersControllers {
       });
     }
     try {
-      const user = await usersService.getUser(paramValid.value);
+      const [user] = await usersService.getUser(paramValid.value);
       res.status(200).json({ user: user });
     } catch (err) {
       console.log(err);
-      res.status(400).json({ err: err });
+      res.status(400).json({ error: err });
     }
   }
   async createUser(req, res) {

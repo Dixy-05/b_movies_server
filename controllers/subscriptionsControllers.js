@@ -11,15 +11,18 @@ class subscriptionsControllers {
     }
   }
   async getSubscription(req, res) {
-    const schema = Joi.string().guid({ version: 'uuidv4' });
-    const paramValid = schema.validate(req.params.id);
+    const schema = Joi.string();
+    const paramValid = schema.validate(req.params.type);
     if (paramValid.error) {
       console.log(paramValid.error);
       res.status(400).json({ error: paramValid.error.details[0].message });
     }
+    console.log('sub controller:', req.params);
 
     try {
-      const subscription = await subscriptionsService.getSubscription();
+      const [subscription] = await subscriptionsService.getSubscription(
+        paramValid.value
+      );
       res.status(200).json({ subscription: subscription });
     } catch (err) {
       console.log(err);
@@ -30,7 +33,7 @@ class subscriptionsControllers {
     const schema = Joi.object({
       type: Joi.string().required(),
       detail: Joi.string().required(),
-      movies_monthly: Joi.number().integer().required(),
+      months: Joi.number().integer().required(),
       price: Joi.number().precision(2).required(),
     });
     const bodyValid = schema.validate(req.body);
@@ -61,14 +64,14 @@ class subscriptionsControllers {
     const bodySchema = Joi.object({
       type: Joi.string(),
       detail: Joi.string(),
-      num_movies_monthly: Joi.number().integer(),
+      months: Joi.number().integer(),
       price: Joi.number().precision(2),
     });
     const bodyValid = bodySchema.validate(req.body);
     if (bodyValid.error) {
       return res
         .status(400)
-        .send({ error: bodyValid.error.details[0].message });
+        .json({ error: bodyValid.error.details[0].message });
     }
 
     try {

@@ -5,10 +5,10 @@ class subscriptionsDAO {
     return subscriptions;
   }
   async getSubscription(reqParams) {
-    const [subscription] = await dbDevelopment
+    const subscription = await dbDevelopment
       .select('*')
       .from('subscriptions')
-      .where('id', reqParams);
+      .where('type', reqParams);
     return subscription;
   }
   async addSubscription(reqBody) {

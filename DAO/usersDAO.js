@@ -6,7 +6,7 @@ class UsersDAO {
     return users;
   }
   async getUser(reqParams) {
-    const [user] = await dbDevelopment
+    const user = await dbDevelopment
       .select('*')
       .from('users')
       .where('email', reqParams);

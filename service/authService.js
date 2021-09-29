@@ -22,7 +22,7 @@ class authService {
         { email: email },
         process.env.TOKEN_SECRET,
         {
-          expiresIn: '1h',
+          expiresIn: '3h',
         },
         (err, token) => {
           if (err) {
