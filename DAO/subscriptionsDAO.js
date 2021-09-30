@@ -12,12 +12,12 @@ class subscriptionsDAO {
     return subscription;
   }
   async addSubscription(reqBody) {
-    const { type, detail, movies_monthly, price } = reqBody;
+    const { type, detail, months, price } = reqBody;
     const [addedSubscription] = await dbDevelopment('subscriptions')
       .insert({
         type: type,
         detail: detail,
-        movies_monthly: movies_monthly,
+        months: months,
         price: price,
       })
       .returning('*');
@@ -30,7 +30,7 @@ class subscriptionsDAO {
       .update({
         type: type,
         detail: detail,
-        movies_monthly: movies_monthly,
+        months: months,
         price: price,
       })
       .returning('*'); // returns all the columns

@@ -81,7 +81,7 @@ class moviesControllers {
     }
   }
   async deleteMovie(req, res) {
-    const schema = Joi.number().integer();
+    const schema = Joi.string().guid({ version: 'uuidv4' });
     const paramValid = schema.validate(req.params.id);
     if (paramValid.error) {
       console.log(paramValid.error);
