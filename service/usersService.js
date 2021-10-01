@@ -7,7 +7,6 @@ class UsersService {
   }
   async getUser(reqParams) {
     const user = await usersDAO.getUser(reqParams);
-    console.log('user from userservice:', user);
     if (user.length === 0) {
       throw `The user with the given email "${reqParams}" does not exist`;
     }

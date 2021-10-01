@@ -36,7 +36,6 @@ class UsersControllers {
     });
     const bodyValid = bodySchema.validate(req.body);
     if (bodyValid.error) {
-      console.log(bodyValid.error);
       return res.json({ error: bodyValid.error.details[0].message });
     }
     try {

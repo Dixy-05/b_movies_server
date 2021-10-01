@@ -17,7 +17,6 @@ class subscriptionsControllers {
       console.log(paramValid.error);
       res.status(400).json({ error: paramValid.error.details[0].message });
     }
-    console.log('sub controller:', req.params);
 
     try {
       const [subscription] = await subscriptionsService.getSubscription(

@@ -6,7 +6,6 @@ class moviesService {
   }
   async getMovie(reqParams) {
     const movie = await moviesDAO.getMovie(reqParams);
-    console.log('movie length:', movie);
     if (movie.length === 0) {
       throw `The movie with the given title "${reqParams}" does not exist.`;
     }
