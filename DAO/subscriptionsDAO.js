@@ -1,11 +1,12 @@
 const { dbProduction, dbDevelopment } = require('../DB/db');
+const db = dbProduction;
 class subscriptionsDAO {
   async getSubscriptions() {
-    const subscriptions = await dbDevelopment.select('*').from('subscriptions');
+    const subscriptions = await db.select('*').from('subscriptions');
     return subscriptions;
   }
   async getSubscription(reqParams) {
-    const subscription = await dbDevelopment
+    const subscription = await db
       .select('*')
       .from('subscriptions')
       .where('type', reqParams);
@@ -13,7 +14,7 @@ class subscriptionsDAO {
   }
   async addSubscription(reqBody) {
     const { type, detail, months, price } = reqBody;
-    const [addedSubscription] = await dbDevelopment('subscriptions')
+    const [addedSubscription] = await db('subscriptions')
       .insert({
         type: type,
         detail: detail,
@@ -25,7 +26,7 @@ class subscriptionsDAO {
   }
   async updateSubscription(reqBody, reqParams) {
     const { type, detail, movies_monthly, price } = reqBody;
-    const [updatedSubscription] = await dbDevelopment('subscriptions')
+    const [updatedSubscription] = await db('subscriptions')
       .where('id', reqParams)
       .update({
         type: type,
@@ -37,7 +38,7 @@ class subscriptionsDAO {
     return updatedSubscription;
   }
   async deleteSubscription(reqParams) {
-    const [deletedSubscription] = await dbDevelopment('subscriptions')
+    const [deletedSubscription] = await db('subscriptions')
       .where('id', reqParams)
       .del()
       .returning('*');

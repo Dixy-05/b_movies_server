@@ -1,20 +1,17 @@
 const { dbProduction, dbDevelopment } = require('../DB/db');
-
+const db = dbProduction;
 class moviesDAO {
   async getMovies() {
-    const movies = await dbDevelopment.select('*').from('movies');
+    const movies = await db.select('*').from('movies');
     return movies;
   }
   async getMovie(reqParams) {
-    const movie = await dbDevelopment
-      .select('*')
-      .from('movies')
-      .where('title', reqParams);
+    const movie = await db.select('*').from('movies').where('title', reqParams);
     return movie;
   }
   async addMovie(reqBody) {
     const { title, genre, year, movieLength } = reqBody;
-    const [addedMovie] = await dbDevelopment('movies')
+    const [addedMovie] = await db('movies')
       .insert({
         title: title,
         genre: genre,
@@ -27,7 +24,7 @@ class moviesDAO {
   async updateMovie(reqBody, reqParams) {
     const { title, genre, year, movieLength } = reqBody;
 
-    const [updatedMovie] = await dbDevelopment('movies')
+    const [updatedMovie] = await db('movies')
       .where('id', reqParams)
       .update({
         title: title,
@@ -39,7 +36,7 @@ class moviesDAO {
     return updatedMovie;
   }
   async deleteMovie(reqParams) {
-    const [deletedMovie] = await dbDevelopment('movies')
+    const [deletedMovie] = await db('movies')
       .where('id', reqParams)
       .del()
       .returning('*');

@@ -1,9 +1,9 @@
-const { dbDevelopment } = require('../DB/db');
-
+const { dbProduction, dbDevelopment } = require('../DB/db');
+const db = dbProduction;
 class auhtDAO {
   async registerUser(reqBody) {
     const { email, password } = reqBody;
-    const [addedUser] = await dbDevelopment('admin_users')
+    const [addedUser] = await db('admin_users')
       .insert({
         email: email,
         password: password,
@@ -12,7 +12,7 @@ class auhtDAO {
     return addedUser;
   }
   async getUser(reqBody) {
-    const [user] = await dbDevelopment
+    const [user] = await db
       .select('*')
       .from('admin_users')
       .where('email', reqBody.email);
