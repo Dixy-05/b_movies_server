@@ -16,13 +16,13 @@ class authService {
       });
     });
   }
-  async generateAccesToken(email) {
+  async generateAccessToken(email) {
     return new Promise((resolve, reject) => {
       jwt.sign(
         { email: email },
         process.env.TOKEN_SECRET,
         {
-          expiresIn: '100s',
+          expiresIn: '3600s',
         },
         (err, token) => {
           if (err) {
@@ -44,7 +44,7 @@ class authService {
       if (user === 0) {
         throw 'Registry Unsuccessful';
       }
-      const accessToken = await this.generateAccesToken(reqBody.email);
+      const accessToken = await this.generateAccessToken(reqBody.email);
       return { accessToken, user };
     }
   }
@@ -73,7 +73,7 @@ class authService {
         user.password
       );
       if (isValid) {
-        const accessToken = await this.generateAccesToken(reqBody.email);
+        const accessToken = await this.generateAccessToken(reqBody.email);
         return { accessToken, user };
       } else {
         console.log('Incorrect password');

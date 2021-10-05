@@ -9,6 +9,7 @@ class auhtDAO {
         password: password,
       })
       .returning('*');
+    console.log('addeduser:', addedUser);
     return addedUser;
   }
   async getUser(reqBody) {
