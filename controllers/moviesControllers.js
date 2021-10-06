@@ -74,10 +74,10 @@ class moviesControllers {
         bodyValid.value,
         paramValid.value
       );
-      res.status(200).json({ movie: updatedMovie });
+      return res.status(200).json({ movie: updatedMovie });
     } catch (err) {
       console.log(err);
-      res.status(400).send(err);
+      return res.status(400).json(err);
     }
   }
   async deleteMovie(req, res) {
