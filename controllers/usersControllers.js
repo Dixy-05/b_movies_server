@@ -3,12 +3,12 @@ const Joi = require('joi');
 
 class UsersControllers {
   async getUsers(req, res) {
-    const users = await usersService.getUsers();
     try {
-      res.status(200).json({ users: users });
+      const users = await usersService.getUsers();
+      return res.status(200).json({ users: users });
     } catch (err) {
       console.log(err);
-      res.status(400).json({ error: err });
+      return res.status(400).json({ error: err });
     }
   }
   async getUser(req, res) {
@@ -21,10 +21,10 @@ class UsersControllers {
     }
     try {
       const [user] = await usersService.getUser(paramValid.value);
-      res.status(200).json({ user: user });
+      return res.status(200).json({ user: user });
     } catch (err) {
       console.log(err);
-      res.status(400).json({ error: err });
+      return res.status(400).json({ error: err });
     }
   }
   async createUser(req, res) {
@@ -40,10 +40,10 @@ class UsersControllers {
     }
     try {
       const newUser = await usersService.createUser(bodyValid.value);
-      res.status(200).json({ user: newUser });
+      return res.status(200).json({ user: newUser });
     } catch (err) {
       console.log(err);
-      res.status(400).json({ error: err });
+      return res.status(400).json({ error: err });
     }
   }
   async deleteUser(req, res) {
@@ -54,7 +54,7 @@ class UsersControllers {
     }
     try {
       const deletedUser = await usersService.deleteUser(paramValid.value);
-      res.status(200).json({ user: deletedUser });
+      return res.status(200).json({ user: deletedUser });
     } catch (error) {
       console.log('the error:', error);
       return res.status(400).json({ error: error });
